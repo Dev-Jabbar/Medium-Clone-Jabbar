@@ -6,55 +6,36 @@ module.exports = {
   ],
   theme: {
     fontfamily: {
-
       sans: [
-        'system-ui',
-        '-apple-system',
-        'BlinkMacSystemFont',
+        "system-ui",
+        "-apple-system",
+        "BlinkMacSystemFont",
         '"Segoe UI"',
-        'Roboto',
+        "Roboto",
         '"Helvetica Neue"',
-        'Arial',
+        "Arial",
         '"Noto Sans"',
-        'Sans-serif',
+        "Sans-serif",
         '"Apple Color Emoji"',
         '"Segoe UI Emoji"',
         '"Segoe UI Symbol"',
         '"Noto Color Emoji"',
-
       ],
-      serif: [
-        
-        'Georgia',
-        'Cambria',
-        '"Times New Roman"',
-        'Times',
-        'serif',
-      ],
+      serif: ["Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
 
       mono: [
-
-       
-        'Menlo',
-        'Monaco',
-        'Consolas',
+        "Menlo",
+        "Monaco",
+        "Consolas",
         '"Liberation Mono"',
         '"Courier New"',
-        'monospace',
+        "monospace",
       ],
-      mediumSerifItalic: ['CharterItalic'],
-      mediumSerif: ['Charter'],
-
-
-
-
-
-
-
-
+      mediumSerifItalic: ["CharterItalic"],
+      mediumSerif: ["Charter"],
     },
 
     extend: {},
   },
   plugins: [],
-}
+};
