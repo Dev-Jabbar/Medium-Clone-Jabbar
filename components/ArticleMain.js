@@ -35,7 +35,7 @@ const styles = {
   title: `font-bold text-3xl`,
   subtitle: `font-mediumSerifItalic text-[1.4rem] text-[#292929]`,
 
-  articleText: `font-mediumSerif  md:text-[1.2rem] text-[1.1rem] text-[#292929] `,
+  articleText: `font-mediumSerif  md:text-[1.1rem] text-[1rem] text-[#292929] `,
 };
 
 const ArticleMain = ({ post, author }) => {

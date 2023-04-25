@@ -7,12 +7,12 @@ import { db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 
 const styles = {
-  wrapper: `flex max-w-[46rem] h-[12rem] items-center gap-[1-rem] cursor-pointer`,
+  wrapper: `flex max-w-[46rem] h-[12rem] items-center gap-[1-rem] mr-1 md:mr-0 mb-6 md:mb-0  cursor-pointer`,
   authorContainer: `flex gap-[.4rem]   `,
   authorImageContainer: `grid place-items-center rounded-full overflow-hidden h-[1.4rem] w-[1.4rem]  `,
   authorImage: `object-cover`,
   authorName: `font-semibold `,
-  title: `font-bold text-2xl`,
+  title: `font-bold text-2xl `,
   briefing: `text-[#787878]`,
   detailsContainer: `flex items-center justify-between text-[#787878]  `,
   articleDetails: `my-2 text-[.8rem] `,

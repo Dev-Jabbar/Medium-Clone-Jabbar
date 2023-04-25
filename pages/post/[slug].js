@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useContext, useState, useEffect } from "react";
 
 const styles = {
-  content: `flex`,
+  content: `flex `,
 };
 
 const Post = () => {

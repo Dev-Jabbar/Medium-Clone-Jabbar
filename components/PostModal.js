@@ -4,7 +4,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
 const styles = {
   wrapper:
-    "w-[70rem] h-[50rem] flex flex-col justify-start items-center gap-[1rem] p-[1rem] font-mediumSerif overflow-scroll",
+    "2xl:h-[50rem] 2xl:w-[80rem] xl:w-[70rem] xl:h-[40rem] lg:w-[60rem] lg:h-[30rem] md:h-[30rem] md:w-[50rem] h-[40rem] w-[20rem]  flex flex-col justify-start items-center gap-[1rem] p-[1rem] font-mediumSerif overflow-scroll",
 
   title: "my-[2rem] font-bold text-3xl",
   smallField: "w-full flex justify-between gap-[1rem]",
