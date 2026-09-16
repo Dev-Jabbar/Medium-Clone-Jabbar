@@ -28,26 +28,51 @@ const PostModal = () => {
   const [bannerImage, setBannerImage] = useState("");
 
   const [body, setBody] = useState("");
+  const [status, setStatus] = useState(""); // "", "saving", "success", "error"
 
   const addPostToFirebase = async (event) => {
     event.preventDefault();
 
-    await addDoc(collection(db, "Articles"), {
-      bannerImage: bannerImage,
-      body: body,
-      category: category,
-      brief: brief,
-      postedOn: serverTimestamp(),
-      postLength: Number(postLength),
-      title: title,
-      author: currentUser.email,
-    });
+    if (!title.trim() || !body.trim()) {
+      setStatus("error");
+      return;
+    }
+
+    setStatus("saving");
+
+    const parsedLength = parseInt(postLength, 10);
+    const safePostLength = Number.isFinite(parsedLength) ? parsedLength : 1;
+
+    try {
+      await addDoc(collection(db, "Articles"), {
+        bannerImage: bannerImage,
+        body: body,
+        category: category,
+        brief: brief,
+        postedOn: serverTimestamp(),
+        postLength: safePostLength,
+        title: title,
+        author: currentUser.email,
+      });
+
+      // Clear the form after a successful save
+      setTitle("");
+      setBrief("");
+      setCategory("");
+      setPostLength("");
+      setBannerImage("");
+      setBody("");
+      setStatus("success");
+    } catch (error) {
+      console.error("Error saving post:", error);
+      setStatus("error");
+    }
   };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}> Create New Post</div>
-      <diV className={styles.smallField}>
+      <div className={styles.smallField}>
         <span className={styles.fieldTitle}>Title</span>
         <span className={styles.inputContainer}>
           <input
@@ -57,9 +82,9 @@ const PostModal = () => {
             onChange={(event) => setTitle(event.target.value)}
           />
         </span>
-      </diV>
+      </div>
 
-      <diV className={styles.smallField}>
+      <div className={styles.smallField}>
         <span className={styles.fieldTitle}>Brief</span>
         <span className={styles.inputContainer}>
           <input
@@ -69,8 +94,8 @@ const PostModal = () => {
             onChange={(event) => setBrief(event.target.value)}
           />
         </span>
-      </diV>
-      <diV className={styles.smallField}>
+      </div>
+      <div className={styles.smallField}>
         <span className={styles.fieldTitle}>BannerImage Url</span>
         <span className={styles.inputContainer}>
           <input
@@ -80,9 +105,9 @@ const PostModal = () => {
             onChange={(event) => setBannerImage(event.target.value)}
           />
         </span>
-      </diV>
+      </div>
 
-      <diV className={styles.smallField}>
+      <div className={styles.smallField}>
         <span className={styles.fieldTitle}>Category</span>
         <span className={styles.inputContainer}>
           <input
@@ -92,38 +117,50 @@ const PostModal = () => {
             onChange={(event) => setCategory(event.target.value)}
           />
         </span>
-      </diV>
+      </div>
 
-      <diV className={styles.smallField}>
+      <div className={styles.smallField}>
         <span className={styles.fieldTitle}>
           Estimated Read Length (in minutes)
         </span>
         <span className={styles.inputContainer}>
           <input
             className={styles.inputField}
-            type="text"
+            type="number"
+            min="1"
             value={postLength}
             onChange={(event) => setPostLength(event.target.value)}
           />
         </span>
-      </diV>
+      </div>
 
-      <diV className={styles.smallField}>
+      <div className={styles.smallField}>
         <span className={styles.fieldTitle}>Article Text</span>
         <span className={styles.inputContainer}>
           <textarea
             className={styles.inputField}
-            type="text"
             value={body}
             onChange={(event) => setBody(event.target.value)}
             rows={12}
           />
         </span>
-      </diV>
+      </div>
 
       <button onClick={addPostToFirebase} className={styles.accentedButton}>
-        Submit
+        {status === "saving" ? "Saving..." : "Submit"}
       </button>
+
+      {status === "success" && (
+        <div className="text-[#1A8917] font-semibold">
+          ✅ Post saved successfully!
+        </div>
+      )}
+      {status === "error" && (
+        <div className="text-red-600 font-semibold">
+          ⚠️ Something went wrong. Make sure Title and Article Text are filled
+          in, then try again.
+        </div>
+      )}
     </div>
   );
 };

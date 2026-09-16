@@ -27,12 +27,9 @@ const PostCard = ({ post }) => {
 
   useEffect(() => {
     const getAuthorData = async () => {
-      console.log(
-        (await getDoc(doc(db, "users", post.data.author))).data(),
-        "🧑‍🚒"
-      );
-
-      setauthorData((await getDoc(doc(db, "users", post.data.author))).data());
+      const snap = await getDoc(doc(db, "users", post.data.author));
+      console.log(snap.data(), "🧑‍🚒");
+      setauthorData(snap.data());
     };
     getAuthorData();
   }, []);
@@ -43,12 +40,15 @@ const PostCard = ({ post }) => {
         <div className={styles.postDetails}>
           <div className={styles.authorContainer}>
             <div className={styles.authorImageContainer}>
-              <Image
-                src={`https://res.cloudinary.com/demo/image/fetch/${authorData?.imageurl}`}
-                className={styles.authorImage}
-                width={40}
-                height={40}
-              />
+              {authorData?.imageurl && (
+                <Image
+                  src={authorData.imageurl}
+                  className={styles.authorImage}
+                  width={40}
+                  height={40}
+                  alt={authorData?.name || "author"}
+                />
+              )}
             </div>
             <div className={styles.authorName}> {authorData?.name}</div>
           </div>
@@ -72,11 +72,14 @@ const PostCard = ({ post }) => {
           </div>
         </div>
         <div className={styles.thumbnailContainer}>
-          <Image
-            height={100}
-            width={100}
-            src={`https://res.cloudinary.com/demo/image/fetch/${post.data.bannerImage}`}
-          />
+          {post.data.bannerImage && (
+            <Image
+              height={100}
+              width={100}
+              src={post.data.bannerImage}
+              alt={post.data.title}
+            />
+          )}
         </div>
       </div>
     </Link>

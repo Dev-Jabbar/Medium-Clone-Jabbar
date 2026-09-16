@@ -32,10 +32,10 @@ const styles = {
   articleMainContainer: `flex flex-col gap-[1rem]`,
 
   image: `object-cover`,
-  title: `font-bold text-3xl`,
-  subtitle: `font-mediumSerifItalic text-[1.4rem] text-[#292929]`,
+  title: `font-bold text-3xl mb-2`,
+  subtitle: `font-mediumSerifItalic text-[1.4rem] text-[#292929] mb-4`,
 
-  articleText: `font-mediumSerif  md:text-[1.1rem] text-[1rem] text-[#292929] `,
+  articleText: `font-mediumSerif leading-relaxed md:text-[1.15rem] text-[1rem] text-[#292929] flex flex-col gap-4`,
 };
 
 const ArticleMain = ({ post, author }) => {
@@ -44,13 +44,14 @@ const ArticleMain = ({ post, author }) => {
     <div className={styles.wrapper}>
       <div className={styles.content}>
         <div className={styles.postHeaderContainer}>
-          <div classaName={styles.authorContainer}>
+          <div className={styles.authorContainer}>
             <div className={styles.authorProfileImageContainer}>
               <Image
-                className={"object - cover"}
-                src={JAB}
+                className={styles.image}
+                src={author?.data?.imageurl || JAB}
                 height={100}
                 width={100}
+                alt={author?.data?.name || "author"}
               />
             </div>
 
@@ -81,20 +82,22 @@ const ArticleMain = ({ post, author }) => {
           </div>
         </div>
         <div className={styles.articleMainContainer}>
-          <diV className={styles.bannerContainer}>
+          <div className={styles.bannerContainer}>
             <Image
               className={styles.image}
-              src={Banner}
+              src={post?.data?.bannerImage || Banner}
               height={100}
               width={100}
+              alt={post?.data?.title || "banner"}
             />
-          </diV>
+          </div>
 
           <h1 className={styles.title}>{post?.data?.title}</h1>
 
           <h4 className={styles.subtitle}>
             <div>
-              {author?.data?.name},{""}{" "}
+              {author?.data?.name}
+              {author?.data?.name ? ", " : ""}
               {new Date(post?.data?.postedOn).toLocaleString("en-US", {
                 day: "numeric",
                 month: "short",
@@ -103,7 +106,15 @@ const ArticleMain = ({ post, author }) => {
             </div>
             <div>{post?.data?.brief}</div>
           </h4>
-          <div className={styles.articleText}>{post?.data?.body}</div>
+
+          <div className={styles.articleText}>
+            {post?.data?.body
+              ?.split("\n")
+              .filter((para) => para.trim() !== "")
+              .map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+          </div>
         </div>
       </div>
     </div>
